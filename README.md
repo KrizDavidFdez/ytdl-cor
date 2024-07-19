@@ -21,10 +21,9 @@ console.log(result)
 }).catch(error => {
 console.error('://')
 })
-
 ```
+
 # Creador
 
 [![Owner](https://i.postimg.cc/gjwt800Q/da32bf02-c5dc-40c4-9807-ffc85a956a13.jpg)](https://wa.me/+51910108980?text=Hola+Samu)
-```
 
