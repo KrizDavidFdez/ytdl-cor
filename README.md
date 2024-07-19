@@ -1,6 +1,4 @@
-# Youtube Downloader - Metadatas 
-
-![Descargador de Audios Para Youtube](https://i.postimg.cc/LXWmBnHM/images.png)
+(https://i.postimg.cc/LXWmBnHM/images.png)
 
 ##Desc
 
