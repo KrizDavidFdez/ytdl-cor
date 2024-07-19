@@ -1,12 +1,45 @@
-(https://i.postimg.cc/LXWmBnHM/images.png)
+```markdown
+# YOUTUBE - DOWNLOADER 
 
-##Desc
-
-Esta librería permite descargar audios de YouTube con Metadatas Incluidas
+![Youtube](https://i.postimg.cc/LXWmBnHM/images.png)
 
 ## Instalacion
 
-Para instalar la librería, ejecuta el siguiente comando en tu terminal:
+```bash
+npm install github:HanSamu-27/ytdl-core
+```
+
+## Uso: 
+
+```javascript
+const { Entiendo, aquí tienes el ejemplo de uso agregado al README en el formato que necesitas:
+
+```markdown
+# YOUTUBE - DOWNLOADER 
+
+![Youtube](https://i.postimg.cc/LXWmBnHM/images.png)
+
+## Instalacion
 
 ```bash
-npm install my-audio-lib
+npm install github:HanSamu-27/ytdl-core
+```
+
+## Uso
+
+```javascript
+const { youtubedl } = require('ytdl-core')
+
+const url = 'https://music.youtube.com/watch?v=HBqH4uJS0PU&si=vf1ddWGR3Q_lHfbP'
+
+downloadAndTagAudio(url)
+  .then(result => {
+    console.log(`Título: ${result.title}`);
+    console.log(`Artista: ${result.artist}`)
+    console.log(`Imagen: ${result.coverPath}`)
+    console.log(`Audio en base64: ${result.audioBase64}`)
+  })
+  .catch(error => {
+    console.error('Error:', error)
+  });
+```
