@@ -1,4 +1,3 @@
-```markdown
 # YOUTUBE - DOWNLOADER 
 
 ![Youtube](https://i.postimg.cc/LXWmBnHM/images.png)
@@ -9,23 +8,7 @@
 npm install github:HanSamu-27/ytdl-core
 ```
 
-## Uso: 
-
-```javascript
-const { Entiendo, aquí tienes el ejemplo de uso agregado al README en el formato que necesitas:
-
-```markdown
-# YOUTUBE - DOWNLOADER 
-
-![Youtube](https://i.postimg.cc/LXWmBnHM/images.png)
-
-## Instalacion
-
-```bash
-npm install github:HanSamu-27/ytdl-core
-```
-
-## Uso
+## Uso:
 
 ```javascript
 const { youtubedl } = require('ytdl-core')
