@@ -27,3 +27,7 @@ console.error('://')
 
 [![Owner](https://i.postimg.cc/gjwt800Q/da32bf02-c5dc-40c4-9807-ffc85a956a13.jpg)](https://wa.me/+51910108980?text=Hola+Samu)
 
+# Youtube Channel
+
+[![YouTuber](https://img.icons8.com/material-outlined/24/000000/youtube.png)](https://youtube.com/@samu-6666?si=ItLx2TaGuggLRY1O)
+
