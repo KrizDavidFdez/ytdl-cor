@@ -1,156 +1,614 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>&#x2618; APIS - Starlights &#x2618;</title> <!-- Escapando los caracteres especiales -->
-  <meta name="viewport" content="width=device-width, initial-scale=0.55">
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.0.2/tailwind.min.css'>
-  <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
-  <link rel="shortcut icon" href="https://i.postimg.cc/s2BY1fdW/4b724b48-3e10-4ca2-b757-6783b5e85002.jpg" type="image/x-icon">
-  <link rel="icon" href="https://i.postimg.cc/s2BY1fdW/4b724b48-3e10-4ca2-b757-6783b5e85002.jpg" type="image/x-icon">
-  <style>
-    body {
-      font-family: 'Nunito', sans-serif;
-      background-color: rgba(0, 0, 139, 0.2); /* Azul translúcido */
-      color: white;
-    }
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    h1, h2, h3, h4, h5, h6 {
-      font-family: 'Nunito', sans-serif;
-    }
+    <!----======== CSS ======== -->
+<style>
+/* ===== Google Font Import - Poppins ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
 
-    .circular-image {
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      margin-right: 10px;
-      position: relative;
-      top: -5px; 
-    }
+:root{
+    /* ===== Colors ===== */
+    --primary-color: #0E4BF1;
+    --panel-color: #FFF;
+    --text-color: #000;
+    --black-light-color: #707070;
+    --border-color: #e6e5e5;
+    --toggle-color: #DDD;
+    --box1-color: #4DA3FF;
+    --box2-color: #FFE6AC;
+    --box3-color: #E7D1FC;
+    --title-icon-color: #fff;
+    
+    /* ====== Transition ====== */
+    --tran-05: all 0.5s ease;
+    --tran-03: all 0.3s ease;
+    --tran-03: all 0.2s ease;
+}
 
-    .flex-items-center {
-      display: flex;
-      align-items: center;
-    }
+body{
+    min-height: 100vh;
+    background-color: var(--primary-color);
+}
+body.dark{
+    --primary-color: #3A3B3C;
+    --panel-color: #242526;
+    --text-color: #CCC;
+    --black-light-color: #CCC;
+    --border-color: #4D4C4C;
+    --toggle-color: #FFF;
+    --box1-color: #3A3B3C;
+    --box2-color: #3A3B3C;
+    --box3-color: #3A3B3C;
+    --title-icon-color: #CCC;
+}
+/* === Custom Scroll Bar CSS === */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
 
-    .larger-text {
-      font-size: 1.1rem; 
-      position: relative;
-      top: -5px; 
-    }
+::-webkit-scrollbar-thumb:hover {
+    background: #0b3cc1;
+}
 
-    * {
-      -webkit-tap-highlight-color: rgba(0,0,0,0);
+body.dark::-webkit-scrollbar-thumb:hover,
+body.dark .activity-data::-webkit-scrollbar-thumb:hover{
+    background: #3A3B3C;
+}
+
+nav{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    padding: 10px 14px;
+    background-color: var(--panel-color);
+    border-right: 1px solid var(--border-color);
+    transition: var(--tran-05);
+}
+nav.close{
+    width: 73px;
+}
+nav .logo-name{
+    display: flex;
+    align-items: center;
+}
+nav .logo-image{
+    display: flex;
+    justify-content: center;
+    min-width: 45px;
+}
+nav .logo-image img{
+    width: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+nav .logo-name .logo_name{
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-left: 14px;
+    transition: var(--tran-05);
+}
+nav.close .logo_name{
+    opacity: 0;
+    pointer-events: none;
+}
+nav .menu-items{
+    margin-top: 40px;
+    height: calc(100% - 90px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.menu-items li{
+    list-style: none;
+}
+.menu-items li a{
+    display: flex;
+    align-items: center;
+    height: 50px;
+    text-decoration: none;
+    position: relative;
+}
+.nav-links li a:hover:before{
+    content: "";
+    position: absolute;
+    left: -7px;
+    height: 5px;
+    width: 5px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+}
+body.dark li a:hover:before{
+    background-color: var(--text-color);
+}
+.menu-items li a i{
+    font-size: 24px;
+    min-width: 45px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--black-light-color);
+}
+.menu-items li a .link-name{
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--black-light-color);    
+    transition: var(--tran-05);
+}
+nav.close li a .link-name{
+    opacity: 0;
+    pointer-events: none;
+}
+.nav-links li a:hover i,
+.nav-links li a:hover .link-name{
+    color: var(--primary-color);
+}
+body.dark .nav-links li a:hover i,
+body.dark .nav-links li a:hover .link-name{
+    color: var(--text-color);
+}
+.menu-items .logout-mode{
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+}
+.menu-items .mode{
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+.menu-items .mode-toggle{
+    position: absolute;
+    right: 14px;
+    height: 50px;
+    min-width: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.mode-toggle .switch{
+    position: relative;
+    display: inline-block;
+    height: 22px;
+    width: 40px;
+    border-radius: 25px;
+    background-color: var(--toggle-color);
+}
+.switch:before{
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 15px;
+    width: 15px;
+    background-color: var(--panel-color);
+    border-radius: 50%;
+    transition: var(--tran-03);
+}
+body.dark .switch:before{
+    left: 20px;
+}
+
+.dashboard{
+    position: relative;
+    left: 250px;
+    background-color: var(--panel-color);
+    min-height: 100vh;
+    width: calc(100% - 250px);
+    padding: 10px 14px;
+    transition: var(--tran-05);
+}
+nav.close ~ .dashboard{
+    left: 73px;
+    width: calc(100% - 73px);
+}
+.dashboard .top{
+    position: fixed;
+    top: 0;
+    left: 250px;
+    display: flex;
+    width: calc(100% - 250px);
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    background-color: var(--panel-color);
+    transition: var(--tran-05);
+    z-index: 10;
+}
+nav.close ~ .dashboard .top{
+    left: 73px;
+    width: calc(100% - 73px);
+}
+.dashboard .top .sidebar-toggle{
+    font-size: 26px;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+.top img{
+    width: 40px;
+    border-radius: 50%;
+}
+.dashboard .dash-content{
+    padding-top: 50px;
+}
+.dash-content .title{
+    display: flex;
+    align-items: center;
+    margin: 60px 0 30px 0;
+}
+.dash-content .title i{
+    position: relative;
+    height: 35px;
+    width: 35px;
+    background-color: var(--primary-color);
+    border-radius: 6px;
+    color: var(--title-icon-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+.dash-content .title .text{
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--text-color);
+    margin-left: 10px;
+}
+.dash-content .boxes{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.dash-content .boxes .box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 12px;
+    width: calc(100% / 3 - 15px);
+    padding: 15px 20px;
+    background-color: var(--box1-color);
+    transition: var(--tran-05);
+}
+.boxes .box i{
+    font-size: 35px;
+    color: var(--text-color);
+}
+.boxes .box .text{
+    white-space: nowrap;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+.boxes .box .number{
+    font-size: 40px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+.boxes .box.box2{
+    background-color: var(--box2-color);
+}
+.boxes .box.box3{
+    background-color: var(--box3-color);
+}
+.dash-content .activity .activity-data{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.activity .activity-data{
+    display: flex;
+}
+.activity-data .data{
+    display: flex;
+    flex-direction: column;
+    margin: 0 15px;
+}
+.activity-data .data-title{
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+.activity-data .data .data-list{
+    font-size: 18px;
+    font-weight: 400;
+    margin-top: 20px;
+    white-space: nowrap;
+    color: var(--text-color);
+}
+
+@media (max-width: 1000px) {
+    nav{
+        width: 73px;
     }
-  </style>
+    nav.close{
+        width: 250px;
+    }
+    nav .logo_name{
+        opacity: 0;
+        pointer-events: none;
+    }
+    nav.close .logo_name{
+        opacity: 1;
+        pointer-events: auto;
+    }
+    nav li a .link-name{
+        opacity: 0;
+        pointer-events: none;
+    }
+    nav.close li a .link-name{
+        opacity: 1;
+        pointer-events: auto;
+    }
+    nav ~ .dashboard{
+        left: 73px;
+        width: calc(100% - 73px);
+    }
+    nav.close ~ .dashboard{
+        left: 250px;
+        width: calc(100% - 250px);
+    }
+    nav ~ .dashboard .top{
+        left: 73px;
+        width: calc(100% - 73px);
+    }
+    nav.close ~ .dashboard .top{
+        left: 250px;
+        width: calc(100% - 250px);
+    }
+    .activity .activity-data{
+        overflow-X: scroll;
+    }
+}
+
+@media (max-width: 780px) {
+    .dash-content .boxes .box{
+        width: calc(100% / 2 - 15px);
+        margin-top: 15px;
+    }
+}
+@media (max-width: 560px) {
+    .dash-content .boxes .box{
+        width: 100% ;
+    }
+}
+@media (max-width: 400px) {
+    nav{
+        width: 0px;
+    }
+    nav.close{
+        width: 73px;
+    }
+    nav .logo_name{
+        opacity: 0;
+        pointer-events: none;
+    }
+    nav.close .logo_name{
+        opacity: 0;
+        pointer-events: none;
+    }
+    nav li a .link-name{
+        opacity: 0;
+        pointer-events: none;
+    }
+    nav.close li a .link-name{
+        opacity: 0;
+        pointer-events: none;
+    }
+    nav ~ .dashboard{
+        left: 0;
+        width: 100%;
+    }
+    nav.close ~ .dashboard{
+        left: 73px;
+        width: calc(100% - 73px);
+    }
+    nav ~ .dashboard .top{
+        left: 0;
+        width: 100%;
+    }
+    nav.close ~ .dashboard .top{
+        left: 0;
+        width: 100%;
+    }
+}
+</style>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <title>Starlights Team | Apis</title>
 </head>
-<body class="shadow py-6 antialiased leading-none">
-  <div id="app" class="h-full">
-    <div class="flex flex-col h-full">
-      <nav class="bg-blue-600 shadow py-6"> <!-- Azul más claro -->
-        <div class="px-6">
-          <div class="flex items-center justify-between">
-            <div>
-              <a href="http://wa.me/+51910108980" class="flex items-center">
-                <img src="https://i.giphy.com/media/3o7TKN9VHPp5ibNgxi/giphy.gif" alt="Logo" class="circular-image"> <!-- Gif -->
-              </a>
+<body>
+    <nav>
+        <div class="logo-name">
+            <div class="logo-image">
+               <img src="https://telegra.ph/file/7399f6516e2e96ed501d6.jpg" alt="">
             </div>
-            <div class="flex items-center text-right">
-              <a href="http://wa.me/+51910108980" class="flex items-center">
-                <img src="https://i.postimg.cc/nzrYVRL3/arin.jpg" alt="Logo" class="circular-image">
-                <span class="text-white text-sm ml-2">By Samu</span>
-              </a>
+
+            <span class="logo_name">Starlights APIS</span>
+        </div>
+
+        <div class="menu-items">
+            <ul class="nav-links">
+                <li><a href="#">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Home</span>
+                </a></li>
+                <li><a href="#">
+    <i class="uil uil-cloud-download"></i>
+    <span class="link-name">Downloaders</span>
+</a></li>
+              <li><a href="#">
+    <i class="uil uil-search"></i>
+    <span class="link-name">Searchs</span>
+</a></li>
+<li><a href="#">
+    <i class="uil uil-setting"></i>
+    <span class="link-name">Tools</span>
+</a></li>
+<li><a href="#">
+    <i class="uil uil-info-circle"></i>
+    <span class="link-name">Infos</span>
+</a></li>
+                <li><a href="#">
+                    <i class="uil uil-share"></i>
+                    <span class="link-name">Share</span>
+                </a></li>
+            </ul>
+ <ul class="logout-mode">
+    <li><a href="https://whatsapp.com/channel/0029VaBfsIwGk1FyaqFcK91S">
+        <i class="uil uil-whatsapp"></i>
+        <span class="link-name">WhatsApp</span>
+    </a></li>
+    <li><a href="https://github.com/StarlightsTeam">
+        <i class="uil uil-github"></i>
+        <span class="link-name">GitHub</span>
+    </a></li>
+    <li><a href="https://youtube.com/@samu-6666?si=u6RAmRMhaYYccgCL">
+        <i class="uil uil-youtube"></i>
+        <span class="link-name">YouTube</span>
+    </a></li>
+    <li class="mode">
+        <a href="#">
+            <i class="uil uil-moon"></i>
+            <span class="link-name">Mode Dark</span>
+        </a>
+
+        <div class="mode-toggle">
+            <span class="switch"></span>
+        </div>
+    </li>
+</ul>
+</div>
+
+    </nav>
+
+    <section class="dashboard">
+        <div class="top">
+            <i class="uil uil-bars sidebar-toggle"></i>
+        </div>
+
+        <div class="dash-content">
+            <div class="overview">
+                <div class="title">
+                    <i class="uil uil-tachometer-fast-alt"></i>
+                    <span class="text">Dashboard</span>
+                </div>
+
+                <div class="boxes">
+                    <div class="box box1">
+                        <i class="uil uil-thumbs-up"></i>
+                        <span class="text">Total Likes</span>
+                        <span class="number">50,120</span>
+                    </div>
+                    <div class="box box2">
+                        <i class="uil uil-comments"></i>
+                        <span class="text">Comments</span>
+                        <span class="number">20,120</span>
+                    </div>
+                    <div class="box box3">
+                        <i class="uil uil-share"></i>
+                        <span class="text">Total Share</span>
+                        <span class="number">10,120</span>
+                    </div>
+                </div>
             </div>
-          </div>
+
+            <div class="activity">
+                <div class="title">
+                    <i class="uil uil-smile"></i>
+                  <span class="text">Creditos</span>
+                  
+       
+                </div>
+
+                <div class="activity-data">
+                    <div class="data names">
+                        <span class="data-title">Nombres</span>
+                        <span class="data-list">Samush</span>
+                        <span class="data-list">Daniel.xyz</span>
+                        <span class="data-list">Iam Jesus17</span>
+                        <span class="data-list">Gabriel</span>
+                        <span class="data-list">Yosmer</span>
+                        <span class="data-list">Alexei</span>
+                    </div>
+                    <div class="data email">
+                        <span class="data-title">Contactarnos</span>
+                        <span class="data-list">+54 9 11 6823-9750</span>
+                        <span class="data-list">+52 81 3258 8591</span>
+                        <span class="data-list">+52 734 143 0079</span>
+                        <span class="data-list">+51 913 091 648</span>
+                        <span class="data-list">+51 978 291 185</span>
+                        <span class="data-list">+54 9 11 2678-8746</span>
+                    </div>
+                    <div class="data type">
+                        <span class="data-title">Estado</span>
+                        <span class="data-list">Activo</span>
+                        <span class="data-list">Activo</span>
+                        <span class="data-list">Activo</span>
+                        <span class="data-list">Activo</span>
+                        <span class="data-list">Activo</span>
+                        <span class="data-list">Activo</span>
+                  </div>
         </div>
-      </nav>
-      <div class="p-6">
-        <div class="flex items-center mb-6">
-          <h1 class="text-xl font-bold mr-4 text-white">Starlights Apis</h1>
-          <a class="bg-blue-500 rounded py-2 px-4 text-white" href="https://whatsapp.com/channel/0029VaBfsIwGk1FyaqFcK91S">Channel OFC</a>
-        </div>
-        <div class="block w-full overflow-x-auto">
-          <table class="w-full text-left shadow-md bg-blue-800 rounded-lg"> <!-- Azul más oscuro -->
-            <thead>
-              <tr>
-                <th class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">API</th> <!-- Azul más oscuro -->
-                <th class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">PARAMETRO</th> <!-- Azul más oscuro -->
-                <th class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">INFO</th> <!-- Azul más oscuro -->
-                <th class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">ACTION</th> <!-- Azul más oscuro -->
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="hover:bg-blue-700">
-                <td class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">Pinterest</td>
-                <td class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">Url</td>
-                <td class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">Downloader</td>
-                <td class="py-4 px-6 border-b border-blue-700">
-                  <a href="/starlight/pindl?url=https://www.pinterest.es/pin/945685621738672726/" class="inline-block text-white font-bold py-2 px-3 mr-2 rounded text-xs bg-blue-600 hover:bg-blue-500">GET</a>
-                </td>
-              </tr>
-              <tr class="hover:bg-blue-700">
-                <td class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">Mangas</td>
-                <td class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">Url</td>
-                <td class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">Downloader</td>
-                <td class="py-4 px-6 border-b border-blue-700">
-                  <a href="/starlight/mangadl?url=https://ver.notasanime.me/2024/04/kanojo-okarishimasu-manga-329-espanol.html?m=1" class="inline-block text-white font-bold py-2 px-3 mr-2 rounded text-xs bg-blue-600 hover:bg-blue-500">GET</a>
-                </td>
-              </tr>
-              <tr class="hover:bg-blue-700">
-                <td class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">Chochox</td>
-                <td class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">Url</td>
-                <td class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">Downloader</td>
-                <td class="py-4 px-6 border-b border-blue-700">
-                  <a href="/starlight/chochox?url=https://chochox.com/my-new-neighbor-mimic-yous/" class="inline-block text-white font-bold py-2 px-3 mr-2 rounded text-xs bg-blue-600 hover:bg-blue-500">GET</a>
-                </td>
-              </tr>
-              <tr class="hover:bg-blue-700">
-                <td class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">ComercioPe</td>
-                <td class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">Url</td>
-                <td class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">Downloader</td>
-                <td class="py-4 px-6 border-b border-blue-700">
-                  <a href="/starlight/comerciope?url=https://elcomercio.pe/mundo/europa/guerra-rusia-ucrania-kharkiv-el-nuevo-frente-de-guerra-abierto-por-vladimir-putin-en-la-importante-region-ucraniana-donde-la-situacion-ha-empeorado-significativamente-vovchansk-lyptsi-volodymyr-zelensky-estados-unidos-otan-vladimir-putin-noticia/" class="inline-block text-white font-bold py-2 px-3 mr-2 rounded text-xs bg-blue-600 hover:bg-blue-500">GET</a>
-                </td>
-              </tr>
-              <tr class="hover:bg-blue-700">
-                <td class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">Tiktok</td>
-                <td class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">Url</td>
-                <td class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">Downloader</td>
-                <td class="py-4 px-6 border-b border-blue-700">
-                  <a href="/starlight/tiktok?url=https://vm.tiktok.com/ZMMvfenJY/" class="inline-block text-white font-bold py-2 px-3 mr-2 rounded text-xs bg-blue-600 hover:bg-blue-500">GET</a>
-                </td>
-              </tr>
-              <tr class="hover:bg-blue-700">
-                <td class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">Instagram</td>
-                <td class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">Url</td>
-                <td class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">Downloader</td>
-                <td class="py-4 px-6 border-b border-blue-700">
-                  <a href="/starlight/instagram?url=https://www.instagram.com/reel/CcsbVQ4AxJX/" class="inline-block text-white font-bold py-2 px-3 mr-2 rounded text-xs bg-blue-600 hover:bg-blue-500">GET</a>
-                </td>
-              </tr>
-              <tr class="hover:bg-blue-700">
-                <td class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">Zedge</td>
-                <td class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">Query</td>
-                <td class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">Ringtones</td>
-                <td class="py-4 px-6 border-b border-blue-700">
-                  <a href="/starlight/zedge?q=jurassic" class="inline-block text-white font-bold py-2 px-3 mr-2 rounded text-xs bg-blue-600 hover:bg-blue-500">GET</a>
-                </td>
-              </tr>
-              <tr class="hover:bg-blue-700">
-                <td class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">Tiktok</td>
-                <td class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">Username</td>
-                <td class="py-4 px-6 bg-blue-900 font-bold uppercase text-sm text-white">Profile</td>
-                <td class="py-4 px-6 border-b border-blue-700">
-                  <a href="/starlight/tiktok?username=johndoe" class="inline-block text-white font-bold py-2 px-3 mr-2 rounded text-xs bg-blue-600 hover:bg-blue-500">GET</a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    </section>
+    <script>
+        const body = document.querySelector("body"),
+              modeToggle = body.querySelector(".mode-toggle"),
+              sidebar = body.querySelector("nav"),
+              sidebarToggle = body.querySelector(".sidebar-toggle");
+
+        let getMode = localStorage.getItem("mode");
+        if(getMode && getMode === "dark"){
+            body.classList.toggle("dark");
+        }
+
+        let getStatus = localStorage.getItem("status");
+        if(getStatus && getStatus === "close"){
+            sidebar.classList.toggle("close");
+        }
+
+        modeToggle.addEventListener("click", () =>{
+            body.classList.toggle("dark");
+            if(body.classList.contains("dark")){
+                localStorage.setItem("mode", "dark");
+            }else{
+                localStorage.setItem("mode", "light");
+            }
+        });
+
+        sidebarToggle.addEventListener("click", () => {
+            sidebar.classList.toggle("close");
+            if(sidebar.classList.contains("close")){
+                localStorage.setItem("status", "close");
+            }else{
+                localStorage.setItem("status", "open");
+            }
+        });
+    </script>
 </body>
-</html>
-          
+  </html>
+                                      
