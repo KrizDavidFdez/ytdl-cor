@@ -4,10 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!----======== CSS ======== -->
-<style>
-/* ===== Google Font Import - Poppins ===== */
+    <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
 *{
     margin: 0;
@@ -442,40 +439,45 @@ nav.close ~ .dashboard .top{
     overflow: hidden; 
 }
 .dashboard {
-    overflow-x: hidden; /* Añadido */
+    overflow: auto; 
 }
 
 .submenu {
-    display: none;
-    background-color: var(--panel-color);
-    position: absolute;
-    left: 100%;
-    top: 0;
-    min-width: 200px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 100;
-    transition: var(--tran-03);
-    overflow-x: auto; 
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 0;
+    margin: 0;
+    list-style: none;
 }
-        .submenu li {
-            list-style: none;
-        }
 
-        .submenu li a {
-            display: block;
-            padding: 10px;
-            text-decoration: none;
-            color: var(--black-light-color);
-        }
+.submenu.active {
+    opacity: 1;
+    max-height: 300px; /* Ajusta según el contenido */
+}
 
-        .submenu li a:hover {
-            background-color: var(--primary-color);
-            color: var(--panel-color);
-        }
+.submenu li {
+    padding: 10px;
+}
 
-        .menu-items li:hover .submenu {
-            display: block;
-        }
+.submenu li a {
+    text-decoration: none;
+    color: var(--black-light-color);
+    transition: background-color var(--tran-03) ease, color var(--tran-03) ease;
+}
+
+.submenu li a:hover {
+    background-color: var(--primary-color);
+    color: var(--panel-color);
+}
+
+body.dark-mode .submenu {
+    background-color: #333;
+    color: #fff;
+}
 </style>
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <title>Starlights Team | Apis</title>
@@ -489,98 +491,97 @@ nav.close ~ .dashboard .top{
 
             <span class="logo_name">Starlights APIS</span>
         </div>
-<div class="menu-items">
-    <ul class="nav-links">
-        <li><a href="#">
-            <i class="uil uil-estate"></i>
-            <span class="link-name">Home</span>
-        </a></li>
 
-        <li>
-            <a href="#">
-                <i class="uil uil-cloud-download"></i>
-                <span class="link-name">Downloaders</span>
-            </a>
-            <ul class="submenu">
-                <li><a href="#">YouTube Downloader</a></li>
-                <li><a href="#">Vimeo Downloader</a></li>
-                <li><a href="#">Facebook Downloader</a></li>
-                <li><a href="#">Twitter Downloader</a></li>
-            </ul>
-        </li>
-
-        <li>
-            <a href="#">
-                <i class="uil uil-search"></i>
-                <span class="link-name">Searchs</span>
-            </a>
-            <ul class="submenu">
-                <li><a href="#">Google Search</a></li>
-                <li><a href="#">YouTube Search</a></li>
-                <li><a href="#">Twitter Search</a></li>
-                <li><a href="#">Instagram Search</a></li>
-            </ul>
-        </li>
-
-        <li>
-            <a href="#">
-                <i class="uil uil-setting"></i>
-                <span class="link-name">Tools</span>
-            </a>
-            <ul class="submenu">
-                <li><a href="#">Converter</a></li>
-                <li><a href="#">Editor</a></li>
-                <li><a href="#">Analyzer</a></li>
-                <li><a href="#">Optimizer</a></li>
-            </ul>
-        </li>
-
-        <li>
-            <a href="#">
-                <i class="uil uil-info-circle"></i>
-                <span class="link-name">Infos</span>
-            </a>
-            <ul class="submenu">
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Contact</a></li>
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Terms of Service</a></li>
-            </ul>
-        </li>
-    </ul>
-</div>
-
+        <div class="menu-items">
+            <ul class="nav-links">
                 <li><a href="#">
-                    <i class="uil uil-share"></i>
-                    <span class="link-name">Share</span>
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Home</span>
                 </a></li>
+
+                <li>
+                    <a href="#">
+                        <i class="uil uil-cloud-download"></i>
+                        <span class="link-name">Downloaders</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="#">YouTube Downloader</a></li>
+                        <li><a href="#">Vimeo Downloader</a></li>
+                        <li><a href="#">Facebook Downloader</a></li>
+                        <li><a href="#">Twitter Downloader</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="uil uil-search"></i>
+                        <span class="link-name">Searchs</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="#">Google Search</a></li>
+                        <li><a href="#">YouTube Search</a></li>
+                        <li><a href="#">Twitter Search</a></li>
+                        <li><a href="#">Instagram Search</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="uil uil-setting"></i>
+                        <span class="link-name">Tools</span>
+                    </a>
+       <ul class="submenu">
+            <li>Submenu Item 1</li>
+            <li>Submenu Item 2</li>
+        </ul>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="uil uil-info-circle"></i>
+                        <span class="link-name">Infos</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </li>
+                
+                <li>
+                    <a href="#">
+                        <i class="uil uil-share"></i>
+                        <span class="link-name">Share</span>
+                    </a>
+                </li>
             </ul>
- <ul class="logout-mode">
-    <li><a href="https://whatsapp.com/channel/0029VaBfsIwGk1FyaqFcK91S">
-        <i class="uil uil-whatsapp"></i>
-        <span class="link-name">WhatsApp</span>
-    </a></li>
-    <li><a href="https://github.com/StarlightsTeam">
-        <i class="uil uil-github"></i>
-        <span class="link-name">GitHub</span>
-    </a></li>
-    <li><a href="https://youtube.com/@samu-6666?si=u6RAmRMhaYYccgCL">
-        <i class="uil uil-youtube"></i>
-        <span class="link-name">YouTube</span>
-    </a></li>
-    <li class="mode">
-        <a href="#">
-            <i class="uil uil-moon"></i>
-            <span class="link-name">Mode Dark</span>
-        </a>
 
-        <div class="mode-toggle">
-            <span class="switch"></span>
+            <ul class="logout-mode">
+                <li><a href="https://whatsapp.com/channel/0029VaBfsIwGk1FyaqFcK91S">
+                    <i class="uil uil-whatsapp"></i>
+                    <span class="link-name">WhatsApp</span>
+                </a></li>
+                <li><a href="https://github.com/StarlightsTeam">
+                    <i class="uil uil-github"></i>
+                    <span class="link-name">GitHub</span>
+                </a></li>
+                <li><a href="https://youtube.com/@samu-6666?si=u6RAmRMhaYYccgCL">
+                    <i class="uil uil-youtube"></i>
+                    <span class="link-name">YouTube</span>
+                </a></li>
+                <li class="mode">
+                    <a href="#">
+                        <i class="uil uil-moon"></i>
+                        <span class="link-name">Mode Dark</span>
+                    </a>
+
+                    <div class="mode-toggle">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+            </ul>
         </div>
-    </li>
-</ul>
-</div>
-
     </nav>
 
     <section class="dashboard">
@@ -608,7 +609,7 @@ nav.close ~ .dashboard .top{
                     </div>
                     <div class="box box3">
                         <i class="uil uil-share"></i>
-                        <span class="text">Total Share</span>
+                        <span class="text">Total Shares</span>
                         <span class="number">10,120</span>
                     </div>
                 </div>
@@ -617,9 +618,7 @@ nav.close ~ .dashboard .top{
             <div class="activity">
                 <div class="title">
                     <i class="uil uil-smile"></i>
-                  <span class="text">Creditos</span>
-                  
-       
+                    <span class="text">Creditos</span>
                 </div>
 
                 <div class="activity-data">
@@ -636,58 +635,50 @@ nav.close ~ .dashboard .top{
                         <span class="data-title">Contactarnos</span>
                         <span class="data-list">+54 9 11 6823-9750</span>
                         <span class="data-list">+52 81 3258 8591</span>
-                        <span class="data-list">+52 734 143 0079</span>
-                        <span class="data-list">+51 913 091 648</span>
-                        <span class="data-list">+51 978 291 185</span>
-                        <span class="data-list">+54 9 11 2678-8746</span>
+                        <span class="data-list">+123 456 7890</span>
                     </div>
-                    <div class="data type">
-                        <span class="data-title">Estado</span>
-                        <span class="data-list">Activo</span>
-                        <span class="data-list">Activo</span>
-                        <span class="data-list">Activo</span>
-                        <span class="data-list">Activo</span>
-                        <span class="data-list">Activo</span>
-                        <span class="data-list">Activo</span>
-                  </div>
+                </div>
+            </div>
         </div>
     </section>
+
     <script>
-        const body = document.querySelector("body"),
-              modeToggle = body.querySelector(".mode-toggle"),
-              sidebar = body.querySelector("nav"),
-              sidebarToggle = body.querySelector(".sidebar-toggle");
+document.addEventListener('DOMContentLoaded', () => {
+    const body = document.querySelector("body"),
+          modeToggle = body.querySelector(".mode-toggle"),
+          sidebar = body.querySelector("nav"),
+          sidebarToggle = body.querySelector(".sidebar-toggle"),
+          menuItems = body.querySelectorAll(".menu-items > ul > li");
 
-        let getMode = localStorage.getItem("mode");
-        if(getMode && getMode === "dark"){
-            body.classList.toggle("dark");
-        }
+    // Alternar el modo oscuro
+    modeToggle.addEventListener("click", () => {
+        body.classList.toggle("dark");
+        localStorage.setItem("mode", body.classList.contains("dark") ? "dark" : "light");
+    });
 
-        let getStatus = localStorage.getItem("status");
-        if(getStatus && getStatus === "close"){
-            sidebar.classList.toggle("close");
-        }
+    // Alternar el estado del sidebar
+    sidebarToggle.addEventListener("click", () => {
+        sidebar.classList.toggle("close");
+        localStorage.setItem("status", sidebar.classList.contains("close") ? "close" : "open");
+    });
 
-        modeToggle.addEventListener("click", () =>{
-            body.classList.toggle("dark");
-            if(body.classList.contains("dark")){
-                localStorage.setItem("mode", "dark");
-            }else{
-                localStorage.setItem("mode", "light");
+    // Manejar el clic en los elementos del menú para mostrar/ocultar el submenu
+    menuItems.forEach(item => {
+        item.addEventListener('click', function() {
+            // Cierra otros submenús
+            menuItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.querySelector('.submenu').classList.remove('active');
+                }
+            });
+            // Alterna el submenú del elemento clicado
+            const submenu = item.querySelector('.submenu');
+            if (submenu) {
+                submenu.classList.toggle('active');
             }
         });
-
-        sidebarToggle.addEventListener("click", () => {
-            sidebar.classList.toggle("close");
-            if(sidebar.classList.contains("close")){
-                localStorage.setItem("status", "close");
-            }else{
-                localStorage.setItem("status", "open");
-            }
-        });
-    </script>
+    });
+});
+</script>
 </body>
-</html>
-
-
-
+    </html>
