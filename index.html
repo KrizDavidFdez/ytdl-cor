@@ -437,6 +437,45 @@ nav.close ~ .dashboard .top{
         width: 100%;
     }
 }
+.activity-data {
+    display: flex;
+    overflow: hidden; 
+}
+.dashboard {
+    overflow-x: hidden; /* Añadido */
+}
+
+.submenu {
+    display: none;
+    background-color: var(--panel-color);
+    position: absolute;
+    left: 100%;
+    top: 0;
+    min-width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    transition: var(--tran-03);
+    overflow-x: auto; 
+}
+        .submenu li {
+            list-style: none;
+        }
+
+        .submenu li a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: var(--black-light-color);
+        }
+
+        .submenu li a:hover {
+            background-color: var(--primary-color);
+            color: var(--panel-color);
+        }
+
+        .menu-items li:hover .submenu {
+            display: block;
+        }
 </style>
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <title>Starlights Team | Apis</title>
@@ -450,29 +489,67 @@ nav.close ~ .dashboard .top{
 
             <span class="logo_name">Starlights APIS</span>
         </div>
+<div class="menu-items">
+    <ul class="nav-links">
+        <li><a href="#">
+            <i class="uil uil-estate"></i>
+            <span class="link-name">Home</span>
+        </a></li>
 
-        <div class="menu-items">
-            <ul class="nav-links">
-                <li><a href="#">
-                    <i class="uil uil-estate"></i>
-                    <span class="link-name">Home</span>
-                </a></li>
-                <li><a href="#">
-    <i class="uil uil-cloud-download"></i>
-    <span class="link-name">Downloaders</span>
-</a></li>
-              <li><a href="#">
-    <i class="uil uil-search"></i>
-    <span class="link-name">Searchs</span>
-</a></li>
-<li><a href="#">
-    <i class="uil uil-setting"></i>
-    <span class="link-name">Tools</span>
-</a></li>
-<li><a href="#">
-    <i class="uil uil-info-circle"></i>
-    <span class="link-name">Infos</span>
-</a></li>
+        <li>
+            <a href="#">
+                <i class="uil uil-cloud-download"></i>
+                <span class="link-name">Downloaders</span>
+            </a>
+            <ul class="submenu">
+                <li><a href="#">YouTube Downloader</a></li>
+                <li><a href="#">Vimeo Downloader</a></li>
+                <li><a href="#">Facebook Downloader</a></li>
+                <li><a href="#">Twitter Downloader</a></li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="uil uil-search"></i>
+                <span class="link-name">Searchs</span>
+            </a>
+            <ul class="submenu">
+                <li><a href="#">Google Search</a></li>
+                <li><a href="#">YouTube Search</a></li>
+                <li><a href="#">Twitter Search</a></li>
+                <li><a href="#">Instagram Search</a></li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="uil uil-setting"></i>
+                <span class="link-name">Tools</span>
+            </a>
+            <ul class="submenu">
+                <li><a href="#">Converter</a></li>
+                <li><a href="#">Editor</a></li>
+                <li><a href="#">Analyzer</a></li>
+                <li><a href="#">Optimizer</a></li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="uil uil-info-circle"></i>
+                <span class="link-name">Infos</span>
+            </a>
+            <ul class="submenu">
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
                 <li><a href="#">
                     <i class="uil uil-share"></i>
                     <span class="link-name">Share</span>
@@ -610,5 +687,7 @@ nav.close ~ .dashboard .top{
         });
     </script>
 </body>
-  </html>
-                                      
+</html>
+
+
+
