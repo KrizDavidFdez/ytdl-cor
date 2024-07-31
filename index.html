@@ -1,684 +1,777 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
-*{
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <title>Starlights APis</title>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --dk-gray-100: #F3F4F6;
+    --dk-gray-200: #E5E7EB;
+    --dk-gray-300: #D1D5DB;
+    --dk-gray-400: #9CA3AF;
+    --dk-gray-500: #6B7280;
+    --dk-gray-600: #4B5563;
+    --dk-gray-700: #374151;
+    --dk-gray-800: #1F2937;
+    --dk-gray-900: #111827;
+    --dk-dark-bg: #2a2b3d; 
+    --dk-darker-bg: #1c1f2a; 
+    --navbar-bg-color: #2d3142; 
+    --sidebar-bg-color: #20232a; 
+    --sidebar-width: 250px;
+    --accent-color: #4a4e69; 
+    --star-color: rgba(255, 255, 255, 0.2);
+}
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
 }
 
-:root{
-    /* ===== Colors ===== */
-    --primary-color: #0E4BF1;
-    --panel-color: #FFF;
-    --text-color: #000;
-    --black-light-color: #707070;
-    --border-color: #e6e5e5;
-    --toggle-color: #DDD;
-    --box1-color: #4DA3FF;
-    --box2-color: #FFE6AC;
-    --box3-color: #E7D1FC;
-    --title-icon-color: #fff;
-    
-    /* ====== Transition ====== */
-    --tran-05: all 0.5s ease;
-    --tran-03: all 0.3s ease;
-    --tran-03: all 0.2s ease;
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--dk-darker-bg);
+    font-size: .925rem;
+    background-image: radial-gradient(circle, var(--dk-dark-bg) 20%, var(--dk-darker-bg) 80%);
+    background-size: cover;
 }
 
-body{
-    min-height: 100vh;
-    background-color: var(--primary-color);
+#wrapper {
+    margin-left: var(--sidebar-width);
+    transition: all .3s ease-in-out;
 }
-body.dark{
-    --primary-color: #3A3B3C;
-    --panel-color: #242526;
-    --text-color: #CCC;
-    --black-light-color: #CCC;
-    --border-color: #4D4C4C;
-    --toggle-color: #FFF;
-    --box1-color: #3A3B3C;
-    --box2-color: #3A3B3C;
-    --box3-color: #3A3B3C;
-    --title-icon-color: #CCC;
+
+#wrapper.fullwidth {
+    margin-left: 0;
 }
-/* === Custom Scroll Bar CSS === */
+
+.sidebar {
+    background-color: var(--sidebar-bg-color);
+    width: var(--sidebar-width);
+    transition: all .3s ease-in-out;
+    transform: translateX(0);
+    z-index: 9999999;
+    position: relative;
+}
+
+.sidebar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+    opacity: 0.3;
+    z-index: -1;
+}
+
+.sidebar .close-aside {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    cursor: pointer;
+    color: #EEE;
+}
+
+.sidebar .sidebar-header {
+    border-bottom: 1px solid #2a2b3c;
+}
+
+.sidebar .sidebar-header h5 a {
+    color: var(--dk-gray-300);
+}
+
+.sidebar .sidebar-header p {
+    color: var(--dk-gray-400);
+    font-size: .825rem;
+}
+
+.sidebar > ul > li {
+    padding: .7rem 1.75rem;
+}
+
+.sidebar ul > li > a {
+    color: var(--dk-gray-400);
+    text-decoration: none;
+}
+
+.sidebar ul > li > a > .num {
+    line-height: 0;
+    border-radius: 3px;
+    font-size: 14px;
+    padding: 0px 5px;
+}
+
+.sidebar ul > li > i {
+    font-size: 18px;
+    margin-right: .7rem;
+    color: var(--dk-gray-500);
+}
+
+.sidebar ul > li.has-dropdown > a:after {
+    content: '\eb3a';
+    font-family: unicons-line;
+    font-size: 1rem;
+    line-height: 1.8;
+    float: right;
+    color: var(--dk-gray-500);
+    transition: all .3s ease-in-out;
+}
+
+.sidebar ul .opened > a:after {
+    transform: rotate(-90deg);
+}
+
+.sidebar ul .sidebar-dropdown {
+    padding-top: 0; 
+    padding-left: 30px;
+    max-height: 0; 
+    overflow: hidden;
+    opacity: 0; 
+    transition: max-height 0.3s ease, opacity 0.3s ease; /
+    display: none; 
+}
+
+.sidebar ul .sidebar-dropdown.active {
+    padding-top: 10px; 
+    max-height: 500px; 
+    opacity: 1; 
+    overflow-y: auto; 
+    display: block; 
+}
+
+.sidebar ul .sidebar-dropdown.no-options {
+    padding-top: 5px; 
+}
+
+* {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+hr {
+    display: none; 
+}
+
+.sidebar ul .sidebar-dropdown > li > a {
+    font-size: .85rem;
+    padding: .5rem 0;
+    display: block;
+}
+
+.show-sidebar {
+    transform: translateX(-270px);
+}
+
+@media (max-width: 767px) {
+    .sidebar ul > li {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+    .sidebar .search {
+        padding: 10px 0 10px 30px;
+    }
+}
+
+.welcome {
+    color: var(--dk-gray-300);
+}
+
+.welcome .content {
+    background-color: var(--dk-dark-bg);
+}
+
+.welcome p {
+    color: var(--dk-gray-400);
+}
+
+.statistics {
+    color: var(--dk-gray-200);
+}
+
+.statistics .box {
+    background-color: var(--dk-dark-bg);
+}
+
+.statistics .box i {
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+}
+
+.statistics .box p {
+    color: var(--dk-gray-400);
+}
+
+.charts .chart-container {
+    background-color: var(--dk-dark-bg);
+}
+
+.charts .chart-container h3 {
+    color: var(--dk-gray-400);
+}
+
+.admins .box .admin {
+    background-color: var(--dk-dark-bg);
+}
+
+.admins .box h3 {
+    color: var(--dk-gray-300);
+}
+
+.admins .box p {
+    color: var(--dk-gray-400);
+}
+
+.statis {
+    color: var(--dk-gray-100);
+}
+
+.statis .box {
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+}
+
+.statis .box h3:after {
+    content: "";
+    height: 2px;
+    width: 70%;
+    margin: auto;
+    background-color: rgba(255, 255, 255, 0.12);
+    display: block;
+    margin-top: 10px;
+}
+
+.statis .box i {
+    position: absolute;
+    height: 70px;
+    width: 70px;
+    font-size: 22px;
+    padding: 15px;
+    top: -25px;
+    left: -25px;
+    background-color: rgba(255, 255, 255, 0.15);
+    line-height: 60px;
+    text-align: right;
+    border-radius: 50%;
+}
+
+.navbar {
+    background-color: var(--navbar-bg-color) !important;
+    border: none !important;
+}
+
+.navbar .dropdown-menu {
+    right: auto !important;
+    left: 0 !important;
+}
+
+.navbar .navbar-nav>li>a {
+    color: #EEE !important;
+    line-height: 55px !important;
+    padding: 0 10px !important;
+}
+
+.navbar .navbar-brand {
+    color: #FFF !important;
+}
+
+.navbar .navbar-nav>li>a:focus,
+.navbar .navbar-nav>li>a:hover {
+    color: #EEE !important;
+}
+
+.navbar .navbar-nav>.open>a,
+.navbar .navbar-nav>.open>a:focus,
+.navbar .navbar-nav>.open>a:hover {
+    background-color: transparent !important;
+    color: #FFF !important;
+}
+
+.navbar .navbar-brand {
+    line-height: 55px !important;
+    padding: 0 !important;
+}
+
+.navbar .navbar-brand:focus,
+.navbar .navbar-brand:hover {
+    color: #FFF !important;
+}
+
+.navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
+    margin: 0 !important;
+}
+
+@media (max-width: 767px) {
+    .navbar>.container-fluid .navbar-brand {
+        margin-left: 15px !important;
+    }
+
+    .navbar .navbar-nav>li>a {
+        padding-left: 0 !important;
+    }
+
+    .navbar-nav {
+        margin: 0 !important;
+    }
+
+    .navbar .navbar-collapse,
+    .navbar .navbar-form {
+        border: none !important;
+    }
+}
+
+.navbar .navbar-nav>li>a {
+    float: left !important;
+}
+
+.navbar .navbar-nav>li>a>span:not(.caret) {
+    background-color: #e74c3c !important;
+    border-radius: 50% !important;
+    height: 25px !important;
+    width: 25px !important;
+    padding: 2px !important;
+    font-size: 11px !important;
+    position: relative !important;
+    top: -10px !important;
+    right: 5px !important;
+}
+
+.dropdown-menu>li>a {
+    padding-top: 5px !important;
+    padding-right: 5px !important;
+}
+
+.navbar .navbar-nav>li>a>i {
+    font-size: 18px !important;
+}
+
+@media (max-width: 767px) {
+    #wrapper {
+        margin: 0 !important;
+    }
+
+    .statistics .box {
+        margin-bottom: 25px !important;
+    }
+
+    .navbar .navbar-nav .open .dropdown-menu>li>a {
+        color: #CCC !important;
+    }
+
+    .navbar .navbar-nav .open .dropdown-menu>li>a:hover {
+        color: #FFF !important;
+    }
+
+    .navbar .navbar-toggle {
+        border: none !important;
+        color: #EEE !important;
+        font-size: 18px !important;
+    }
+
+    .navbar .navbar-toggle:focus, .navbar .navbar-toggle:hover {
+        background-color: transparent !important;
+    }
+}
+
 ::-webkit-scrollbar {
-    width: 8px;
+    background: transparent;
+    width: 5px;
+    height: 5px;
 }
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
+
 ::-webkit-scrollbar-thumb {
-    background: var(--primary-color);
-    border-radius: 12px;
-    transition: all 0.3s ease;
+    background-color: #3c3f58;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #0b3cc1;
+    background-color: rgba(0, 0, 0, 0.3);
 }
-
-body.dark::-webkit-scrollbar-thumb:hover,
-body.dark .activity-data::-webkit-scrollbar-thumb:hover{
-    background: #3A3B3C;
-}
-
-nav{
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 250px;
-    padding: 10px 14px;
-    background-color: var(--panel-color);
-    border-right: 1px solid var(--border-color);
-    transition: var(--tran-05);
-}
-nav.close{
-    width: 73px;
-}
-nav .logo-name{
-    display: flex;
-    align-items: center;
-}
-nav .logo-image{
-    display: flex;
-    justify-content: center;
-    min-width: 45px;
-}
-nav .logo-image img{
-    width: 40px;
-    object-fit: cover;
-    border-radius: 50%;
-}
-
-nav .logo-name .logo_name{
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--text-color);
-    margin-left: 14px;
-    transition: var(--tran-05);
-}
-nav.close .logo_name{
-    opacity: 0;
-    pointer-events: none;
-}
-nav .menu-items{
-    margin-top: 40px;
-    height: calc(100% - 90px);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-.menu-items li{
-    list-style: none;
-}
-.menu-items li a{
-    display: flex;
-    align-items: center;
-    height: 50px;
-    text-decoration: none;
-    position: relative;
-}
-.nav-links li a:hover:before{
-    content: "";
-    position: absolute;
-    left: -7px;
-    height: 5px;
-    width: 5px;
-    border-radius: 50%;
-    background-color: var(--primary-color);
-}
-body.dark li a:hover:before{
-    background-color: var(--text-color);
-}
-.menu-items li a i{
-    font-size: 24px;
-    min-width: 45px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--black-light-color);
-}
-.menu-items li a .link-name{
-    font-size: 18px;
-    font-weight: 400;
-    color: var(--black-light-color);    
-    transition: var(--tran-05);
-}
-nav.close li a .link-name{
-    opacity: 0;
-    pointer-events: none;
-}
-.nav-links li a:hover i,
-.nav-links li a:hover .link-name{
-    color: var(--primary-color);
-}
-body.dark .nav-links li a:hover i,
-body.dark .nav-links li a:hover .link-name{
-    color: var(--text-color);
-}
-.menu-items .logout-mode{
-    padding-top: 10px;
-    border-top: 1px solid var(--border-color);
-}
-.menu-items .mode{
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
-}
-.menu-items .mode-toggle{
-    position: absolute;
-    right: 14px;
-    height: 50px;
-    min-width: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-.mode-toggle .switch{
-    position: relative;
-    display: inline-block;
-    height: 22px;
-    width: 40px;
-    border-radius: 25px;
-    background-color: var(--toggle-color);
-}
-.switch:before{
-    content: "";
-    position: absolute;
-    left: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 15px;
-    width: 15px;
-    background-color: var(--panel-color);
-    border-radius: 50%;
-    transition: var(--tran-03);
-}
-body.dark .switch:before{
-    left: 20px;
-}
-
-.dashboard{
-    position: relative;
-    left: 250px;
-    background-color: var(--panel-color);
-    min-height: 100vh;
-    width: calc(100% - 250px);
-    padding: 10px 14px;
-    transition: var(--tran-05);
-}
-nav.close ~ .dashboard{
-    left: 73px;
-    width: calc(100% - 73px);
-}
-.dashboard .top{
-    position: fixed;
-    top: 0;
-    left: 250px;
-    display: flex;
-    width: calc(100% - 250px);
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 14px;
-    background-color: var(--panel-color);
-    transition: var(--tran-05);
-    z-index: 10;
-}
-nav.close ~ .dashboard .top{
-    left: 73px;
-    width: calc(100% - 73px);
-}
-.dashboard .top .sidebar-toggle{
-    font-size: 26px;
-    color: var(--text-color);
-    cursor: pointer;
-}
-
-.top img{
-    width: 40px;
-    border-radius: 50%;
-}
-.dashboard .dash-content{
-    padding-top: 50px;
-}
-.dash-content .title{
-    display: flex;
-    align-items: center;
-    margin: 60px 0 30px 0;
-}
-.dash-content .title i{
-    position: relative;
-    height: 35px;
-    width: 35px;
-    background-color: var(--primary-color);
-    border-radius: 6px;
-    color: var(--title-icon-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-}
-.dash-content .title .text{
-    font-size: 24px;
-    font-weight: 500;
-    color: var(--text-color);
-    margin-left: 10px;
-}
-.dash-content .boxes{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-.dash-content .boxes .box{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 12px;
-    width: calc(100% / 3 - 15px);
-    padding: 15px 20px;
-    background-color: var(--box1-color);
-    transition: var(--tran-05);
-}
-.boxes .box i{
-    font-size: 35px;
-    color: var(--text-color);
-}
-.boxes .box .text{
-    white-space: nowrap;
-    font-size: 18px;
-    font-weight: 500;
-    color: var(--text-color);
-}
-.boxes .box .number{
-    font-size: 40px;
-    font-weight: 500;
-    color: var(--text-color);
-}
-.boxes .box.box2{
-    background-color: var(--box2-color);
-}
-.boxes .box.box3{
-    background-color: var(--box3-color);
-}
-.dash-content .activity .activity-data{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-.activity .activity-data{
-    display: flex;
-}
-.activity-data .data{
-    display: flex;
-    flex-direction: column;
-    margin: 0 15px;
-}
-.activity-data .data-title{
-    font-size: 20px;
-    font-weight: 500;
-    color: var(--text-color);
-}
-.activity-data .data .data-list{
-    font-size: 18px;
-    font-weight: 400;
-    margin-top: 20px;
-    white-space: nowrap;
-    color: var(--text-color);
-}
-
-@media (max-width: 1000px) {
-    nav{
-        width: 73px;
-    }
-    nav.close{
-        width: 250px;
-    }
-    nav .logo_name{
-        opacity: 0;
-        pointer-events: none;
-    }
-    nav.close .logo_name{
-        opacity: 1;
-        pointer-events: auto;
-    }
-    nav li a .link-name{
-        opacity: 0;
-        pointer-events: none;
-    }
-    nav.close li a .link-name{
-        opacity: 1;
-        pointer-events: auto;
-    }
-    nav ~ .dashboard{
-        left: 73px;
-        width: calc(100% - 73px);
-    }
-    nav.close ~ .dashboard{
-        left: 250px;
-        width: calc(100% - 250px);
-    }
-    nav ~ .dashboard .top{
-        left: 73px;
-        width: calc(100% - 73px);
-    }
-    nav.close ~ .dashboard .top{
-        left: 250px;
-        width: calc(100% - 250px);
-    }
-    .activity .activity-data{
-        overflow-X: scroll;
-    }
-}
-
-@media (max-width: 780px) {
-    .dash-content .boxes .box{
-        width: calc(100% / 2 - 15px);
-        margin-top: 15px;
-    }
-}
-@media (max-width: 560px) {
-    .dash-content .boxes .box{
-        width: 100% ;
-    }
-}
-@media (max-width: 400px) {
-    nav{
-        width: 0px;
-    }
-    nav.close{
-        width: 73px;
-    }
-    nav .logo_name{
-        opacity: 0;
-        pointer-events: none;
-    }
-    nav.close .logo_name{
-        opacity: 0;
-        pointer-events: none;
-    }
-    nav li a .link-name{
-        opacity: 0;
-        pointer-events: none;
-    }
-    nav.close li a .link-name{
-        opacity: 0;
-        pointer-events: none;
-    }
-    nav ~ .dashboard{
-        left: 0;
-        width: 100%;
-    }
-    nav.close ~ .dashboard{
-        left: 73px;
-        width: calc(100% - 73px);
-    }
-    nav ~ .dashboard .top{
-        left: 0;
-        width: 100%;
-    }
-    nav.close ~ .dashboard .top{
-        left: 0;
-        width: 100%;
-    }
-}
-.activity-data {
-    display: flex;
-    overflow: hidden; 
-}
-.dashboard {
-    overflow: auto; 
-}
-
-.submenu {
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease, opacity 0.3s ease;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
-
-.submenu.active {
-    opacity: 1;
-    max-height: 300px; /* Ajusta según el contenido */
-}
-
-.submenu li {
-    padding: 10px;
-}
-
-.submenu li a {
-    text-decoration: none;
-    color: var(--black-light-color);
-    transition: background-color var(--tran-03) ease, color var(--tran-03) ease;
-}
-
-.submenu li a:hover {
-    background-color: var(--primary-color);
-    color: var(--panel-color);
-}
-
-body.dark-mode .submenu {
-    background-color: #333;
-    color: #fff;
-}
-</style>
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-    <title>Starlights Team | Apis</title>
+  </style>
 </head>
 <body>
-    <nav>
-        <div class="logo-name">
-            <div class="logo-image">
-               <img src="https://telegra.ph/file/7399f6516e2e96ed501d6.jpg" alt="">
-            </div>
-
-            <span class="logo_name">Starlights APIS</span>
-        </div>
-
-        <div class="menu-items">
-            <ul class="nav-links">
-                <li><a href="#">
-                    <i class="uil uil-estate"></i>
-                    <span class="link-name">Home</span>
-                </a></li>
-
-                <li>
-                    <a href="#">
-                        <i class="uil uil-cloud-download"></i>
-                        <span class="link-name">Downloaders</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="#">YouTube Downloader</a></li>
-                        <li><a href="#">Vimeo Downloader</a></li>
-                        <li><a href="#">Facebook Downloader</a></li>
-                        <li><a href="#">Twitter Downloader</a></li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="#">
-                        <i class="uil uil-search"></i>
-                        <span class="link-name">Searchs</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="#">Google Search</a></li>
-                        <li><a href="#">YouTube Search</a></li>
-                        <li><a href="#">Twitter Search</a></li>
-                        <li><a href="#">Instagram Search</a></li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="#">
-                        <i class="uil uil-setting"></i>
-                        <span class="link-name">Tools</span>
-                    </a>
-       <ul class="submenu">
-            <li>Submenu Item 1</li>
-            <li>Submenu Item 2</li>
+  <aside class="sidebar position-fixed top-0 left-0 overflow-auto h-100 float-left" id="show-side-navigation1">
+    <i class="fas fa-times close-aside d-md-none d-lg-none" data-close="show-side-navigation1"></i>
+    <div class="sidebar-header d-flex justify-content-center align-items-center px-3 py-4">
+      <img
+           class="rounded-pill img-fluid"
+           width="65"
+           src="https://telegra.ph/file/7399f6516e2e96ed501d6.jpg"
+           alt="">
+      <div class="ms-2">
+        <h5 class="fs-6 mb-0">
+          <a class="text-decoration-none" href="#">Starlights | APis</a>
+        </h5>
+        <p class="mt-1 mb-0">Team Especializado en Wabots && Telegram</p>
+      </div>
+    </div>
+    <ul class="categories list-unstyled">
+      <li class="has-dropdown">
+        <i class="fas fa-search fa-fw"></i><a href="#"> Searchs</a>
+        <ul class="sidebar-dropdown list-unstyled">
+<li><a href="#" data-url="/starlight/zedge-rings-search?text=lofi">Zedge Rings</a></li>
+<li><a href="#" data-url="/starlight/zedge-walls-search?text=Pokemon">Zedge Wallpapers</a></li>
+<li><a href="#" data-url="/starlight/soundcloud-search?text=Que+te+parece">SoundCloud</a></li>
+<li><a href="#" data-url="/starlight/pinterest-search?text=Ai+Hoshino">Pinterest</a></li>
+<li><a href="#" data-url="/starlight/tiktoksearch?text=Que+te+parece">Tiktok</a></li>
         </ul>
-                </li>
-
-                <li>
-                    <a href="#">
-                        <i class="uil uil-info-circle"></i>
-                        <span class="link-name">Infos</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                    </ul>
-                </li>
-                
-                <li>
-                    <a href="#">
-                        <i class="uil uil-share"></i>
-                        <span class="link-name">Share</span>
-                    </a>
-                </li>
-            </ul>
-
-            <ul class="logout-mode">
-                <li><a href="https://whatsapp.com/channel/0029VaBfsIwGk1FyaqFcK91S">
-                    <i class="uil uil-whatsapp"></i>
-                    <span class="link-name">WhatsApp</span>
-                </a></li>
-                <li><a href="https://github.com/StarlightsTeam">
-                    <i class="uil uil-github"></i>
-                    <span class="link-name">GitHub</span>
-                </a></li>
-                <li><a href="https://youtube.com/@samu-6666?si=u6RAmRMhaYYccgCL">
-                    <i class="uil uil-youtube"></i>
-                    <span class="link-name">YouTube</span>
-                </a></li>
-                <li class="mode">
-                    <a href="#">
-                        <i class="uil uil-moon"></i>
-                        <span class="link-name">Mode Dark</span>
-                    </a>
-
-                    <div class="mode-toggle">
-                        <span class="switch"></span>
-                    </div>
-                </li>
-            </ul>
+      </li>
+      <li class="has-dropdown">
+        <i class="fas fa-download fa-fw"></i><a href="#"> Downloaders</a>
+        <ul class="sidebar-dropdown list-unstyled">
+        <li><a href="#" data-url="starlight/terabox-dl?url=https://1024terabox.com/s/1dFpKNYAjw2XcZjFZeCcS5A">Terabox</a></li>
+      <li><a href="#" data-url="/starlight/zedge-dl?url=https://www.zedge.net/ringtone/d0d0996d-7974-480b-857f-f8e45805fc81">Zedge</a></li>
+                       <li><a href="#" data-url="/starlight/Ifunny-dl?text=https://ifunny.co/video/sHbRld9F9?s=cl">Ifunny</a></li>
+             <li><a href="#" data-url="/starlight/like-downloader?url=https://l.likee.video/v/E4JSK7">Likee</a></li>
+                <li><a href="#" data-url="/starlight/soundcloud?url=https://on.soundcloud.com/KtxsK59Q6FQNQqKm6">Souncloud</a></li>
+                            <li><a href="#" data-url="/starlight/instagram?url=https://www.instagram.com/reel/Cw1QR_xt5mh/?igshid=MzRlODBiNWFlZA">Instagram</a></li>
+              <li><a href="#" data-url="/starlight/tiktok?url=https://vm.tiktok.com/ZMMvfenJY/">TikTok</a></li>
+                            <li><a href="#" data-url="/starlight/facebook?url=https://fb.watch/s3K1KcimQP/?mibextid=10F2z1T9z1KXOHtQ">Facebook</a></li>
+                            <li><a href="#" data-url="/starlight/chochox?url=https://chochox.com/my-new-neighbor-mimic-yous/">Chochox</a></li>
+          <li><a href="#" data-url="/starlight/mangadl?url=https://ver.notasanime.me/2024/04/kanojo-okarishimasu-manga-329-espanol.html?m=1">Mangas</a></li>
+                            <li><a href="#" data-url="/starlight/pindl?url=https://www.pinterest.es/pin/945685621738672726/">Pinterest</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown">
+    <i class="fas fa-info-circle fa-fw"></i><a href="#"> Infos</a>
+    <ul class="sidebar-dropdown list-unstyled">
+        
+    </ul>
+</li>
+<li class="has-dropdown">
+        <i class="fas fa-tools fa-fw"></i><a href="#"> Tools</a>
+        <ul class="sidebar-dropdown list-unstyled">
+                  <li><a href="#" data-url="/starlight/chazam?url=https://www.tikwm.com//video/music/7390510015049714950.mp3">Shazam</a></li>
+                  <li><a href="#" data-url="/starlight/blackbox?system=Eres+una+ai+llamada+blackbox&text=Que+dia+es+hoy+en+peru">BlackBox AI</a></li>
+                 <li><a href="#" data-url="/starlight/turbo-ai?content=Actuaras+como+un+bot+de+WhatsApp&text=Quien+eres">System AI</a></li>
+                 <li><a href="#" data-url="/starlight/chatgpt?text=Hola+Chatgpt">ChatGPT</a></li>
+                     <li><a href="#" data-url="/starlight/turbo-gpt?text=Hola+Chatgpt">ChatGPT Turbo</a></li>
+                   <li><a href="#" data-url="/starlight/transcribir-youtube?url=https://youtube.com/watch?v=cNhXH1etCwM">Transcrip Youtube</a></li>
+        </ul>
+      </li>
+    </ul>
+  </aside>
+  <section id="wrapper">
+    <nav class="navbar navbar-expand-md">
+      <div class="container-fluid mx-2">
+        <div class="navbar-header">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#toggle-navbar" aria-controls="toggle-navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars text-white"></i>
+          </button>
+          <a class="navbar-brand" href="#">Starlights Team<span class="main-color"></span></a>
         </div>
+        <div class="collapse navbar-collapse" id="toggle-navbar">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Settings
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">My account</a></li>
+                <li><a class="dropdown-item" href="#">My inbox</a></li>
+                <li><a class="dropdown-item" href="#">Help</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Log out</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fas fa-comments"></i><span>23</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fas fa-bell"></i><span>98</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i data-show="show-side-navigation1" class="fas fa-bars show-side-btn"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </nav>
 
-    <section class="dashboard">
-        <div class="top">
-            <i class="uil uil-bars sidebar-toggle"></i>
+    <div class="p-4">
+      <div class="welcome">
+        <div class="content rounded-3 p-3">
+          <h1 class="fs-3">W E L C O M E - S T A R S | A P I S</h1>
+          <p class="mb-0">Hola, Bienvenid@ ami Api Rest🙃</p>
         </div>
+      </div>
 
-        <div class="dash-content">
-            <div class="overview">
-                <div class="title">
-                    <i class="uil uil-tachometer-fast-alt"></i>
-                    <span class="text">Dashboard</span>
-                </div>
-
-                <div class="boxes">
-                    <div class="box box1">
-                        <i class="uil uil-thumbs-up"></i>
-                        <span class="text">Total Likes</span>
-                        <span class="number">50,120</span>
+  <section class="statistics mt-4">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="box d-flex rounded-2 align-items-center mb-4 mb-lg-0 p-3">
+                <i class="fas fa-paperclip fs-2 text-center bg-primary rounded-circle"></i>
+                <div class="ms-3">
+                    <div class="d-flex align-items-center">
+                        <h3 class="mb-0">13,762</h3> <span class="d-inline-block fs-6 ms-2">Solicitudes</span>
                     </div>
-                    <div class="box box2">
-                        <i class="uil uil-comments"></i>
-                        <span class="text">Comments</span>
-                        <span class="number">20,120</span>
-                    </div>
-                    <div class="box box3">
-                        <i class="uil uil-share"></i>
-                        <span class="text">Total Shares</span>
-                        <span class="number">10,120</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="activity">
-                <div class="title">
-                    <i class="uil uil-smile"></i>
-                    <span class="text">Creditos</span>
-                </div>
-
-                <div class="activity-data">
-                    <div class="data names">
-                        <span class="data-title">Nombres</span>
-                        <span class="data-list">Samush</span>
-                        <span class="data-list">Daniel.xyz</span>
-                        <span class="data-list">Iam Jesus17</span>
-                        <span class="data-list">Gabriel</span>
-                        <span class="data-list">Yosmer</span>
-                        <span class="data-list">Alexei</span>
-                    </div>
-                    <div class="data email">
-                        <span class="data-title">Contactarnos</span>
-                        <span class="data-list">+54 9 11 6823-9750</span>
-                        <span class="data-list">+52 81 3258 8591</span>
-                        <span class="data-list">+123 456 7890</span>
-                    </div>
+                    <p class="mb-0">Veces Usadas</p>
                 </div>
             </div>
         </div>
-    </section>
+<div class="col-lg-4">
+    <div class="box d-flex rounded-2 align-items-center mb-4 mb-lg-0 p-3">
+        <i class="fas fa-user fs-2 text-center bg-primary rounded-circle"></i>
+        <div class="ms-3">
+            <div class="d-flex align-items-center">
+                <h3 class="mb-0">3,762</h3> <span class="d-inline-block fs-6 ms-2">Visitantes</span>
+            </div>
+            <p class="mb-0"></p>
+        </div>
+    </div>
+</div>
+<div class="col-lg-4">
+    <div class="box d-flex rounded-2 align-items-center p-3">
+        <i class="fas fa-network-wired fs-2 text-center bg-primary rounded-circle"></i>
+        <div class="ms-3">
+            <div class="d-flex align-items-center">
+                <h3 id="user-ip" class="mb-0">--</h3> <span class="d-inline-block fs-6 ms-2">IP</span>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+        </div>
+      </section>
+    </div>
+  </section>
+  <script type="text/javascript">
+  function $(selector) {
+    return document.querySelector(selector)
+  }
 
-    <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const body = document.querySelector("body"),
-          modeToggle = body.querySelector(".mode-toggle"),
-          sidebar = body.querySelector("nav"),
-          sidebarToggle = body.querySelector(".sidebar-toggle"),
-          menuItems = body.querySelectorAll(".menu-items > ul > li");
+  function find(el, selector) {
+    let finded;
+    return (finded = el.querySelector(selector)) ? finded : null;
+  }
+  function siblings(el) {
+    const siblings = []
+    for (let sibling of el.parentNode.children) {
+      if (sibling !== el) {
+        siblings.push(sibling)
+      }
+    }
+    return siblings
+  }
+  const showAsideBtn = $('.show-side-btn')
+  const sidebar = $('.sidebar')
+  const wrapper = $('#wrapper')
+  showAsideBtn.addEventListener('click', function () {
+    $(`#${this.dataset.show}`).classList.toggle('show-sidebar')
+    wrapper.classList.toggle('fullwidth')
+  })
+  if (window.innerWidth < 767) {
+    sidebar.classList.add('show-sidebar')
+  }
 
-    // Alternar el modo oscuro
-    modeToggle.addEventListener("click", () => {
-        body.classList.toggle("dark");
-        localStorage.setItem("mode", body.classList.contains("dark") ? "dark" : "light");
-    });
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 767) {
+      sidebar.classList.remove('show-sidebar')
+    }
+  })
+  var slideNavDropdown = $('.sidebar-dropdown')
 
-    // Alternar el estado del sidebar
-    sidebarToggle.addEventListener("click", () => {
-        sidebar.classList.toggle("close");
-        localStorage.setItem("status", sidebar.classList.contains("close") ? "close" : "open");
-    });
-
-    // Manejar el clic en los elementos del menú para mostrar/ocultar el submenu
-    menuItems.forEach(item => {
-        item.addEventListener('click', function() {
-            // Cierra otros submenús
-            menuItems.forEach(otherItem => {
-                if (otherItem !== item) {
-                    otherItem.querySelector('.submenu').classList.remove('active');
-                }
-            });
-            // Alterna el submenú del elemento clicado
-            const submenu = item.querySelector('.submenu');
-            if (submenu) {
-                submenu.classList.toggle('active');
-            }
-        });
-    });
-});
+  $('.sidebar .categories').addEventListener('click', function (event) {
+    event.preventDefault()
+    const item = event.target.closest('.has-dropdown')
+    if (!item) {
+      return
+    }
+    item.classList.toggle('opened')
+    siblings(item).forEach(sibling => {
+      sibling.classList.remove('opened')
+    })
+    if (item.classList.contains('opened')) {
+      const toOpen = find(item, '.sidebar-dropdown')
+      if (toOpen) {
+        toOpen.classList.add('active')
+      }
+      siblings(item).forEach(sibling => {
+        const toClose = find(sibling, '.sidebar-dropdown')
+        if (toClose) {
+          toClose.classList.remove('active')
+        }
+      })
+    } else {
+      find(item, '.sidebar-dropdown').classList.toggle('active')
+    }
+  })
+  $('.sidebar .close-aside').addEventListener('click', function () {
+    $(`#${this.dataset.close}`).classList.add('show-sidebar')
+    wrapper.classList.remove('margin')
+  })
+  Chart.defaults.global.animation.duration = 2000
+  Chart.defaults.global.title.display = false
+  Chart.defaults.global.defaultFontColor = '#71748c'
+  Chart.defaults.global.defaultFontSize = 13
+  Chart.defaults.global.tooltips.backgroundColor = '#111827'
+  Chart.defaults.global.tooltips.borderColor = 'blue'
+  Chart.defaults.scale.gridLines.zeroLineColor = '#3b3d56'
+  Chart.defaults.scale.gridLines.color = '#3b3d56'
+  Chart.defaults.scale.gridLines.drawBorder = false
+  Chart.defaults.global.legend.labels.padding = 0
+  Chart.defaults.global.legend.display = false
+  Chart.defaults.scale.ticks.fontSize = 12
+  Chart.defaults.scale.ticks.fontColor = '#71748c'
+  Chart.defaults.scale.ticks.beginAtZero = false
+  Chart.defaults.scale.ticks.padding = 10
+  Chart.defaults.global.elements.point.radius = 0
+  Chart.defaults.global.responsive = true
+  Chart.defaults.global.maintainAspectRatio = false
+  var myChart = new Chart(document.getElementById('myChart'), {
+    type: 'bar',
+    data: {
+      labels: ["January", "February", "March", "April", 'May', 'June', 'August', 'September'],
+      datasets: [{
+        label: "Lost",
+        data: [45, 25, 40, 20, 60, 20, 35, 25],
+        backgroundColor: "#0d6efd",
+        borderColor: 'transparent',
+        borderWidth: 2.5,
+        barPercentage: 0.4,
+      }, {
+        label: "Success",
+        startAngle: 2,
+        data: [20, 40, 20, 50, 25, 40, 25, 10],
+        backgroundColor: "#dc3545",
+        borderColor: 'transparent',
+        borderWidth: 2.5,
+        barPercentage: 0.4,
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          gridLines: {},
+          ticks: {
+            stepSize: 15,
+          },
+        }],
+        xAxes: [{
+          gridLines: {
+            display: false,
+          }
+        }]
+      }
+    }
+  })
+  var chart = new Chart(document.getElementById('myChart2'), {
+    type: 'line',
+    data: {
+      labels: ["January", "February", "March", "April", 'May', 'June', 'August', 'September'],
+      datasets: [{
+        label: "My First dataset",
+        data: [4, 20, 5, 20, 5, 25, 9, 18],
+        backgroundColor: 'transparent',
+        borderColor: '#0d6efd',
+        lineTension: .4,
+        borderWidth: 1.5,
+      }, {
+        label: "Month",
+        data: [11, 25, 10, 25, 10, 30, 14, 23],
+        backgroundColor: 'transparent',
+        borderColor: '#dc3545',
+        lineTension: .4,
+        borderWidth: 1.5,
+      }, {
+        label: "Month",
+        data: [16, 30, 16, 30, 16, 36, 21, 35],
+        backgroundColor: 'transparent',
+        borderColor: '#f0ad4e',
+        lineTension: .4,
+        borderWidth: 1.5,
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          gridLines: {
+            drawBorder: false
+          },
+          ticks: {
+            stepSize: 12,
+          }
+        }],
+        xAxes: [{
+          gridLines: {
+            display: false,
+          },
+        }]
+      }
+    }
+  })
+  var chart = document.getElementById('chart3')
+  var myChart = new Chart(chart, {
+    type: 'line',
+    data: {
+      labels: ["One", "Two", "Three", "Four", "Five", 'Six', "Seven", "Eight"],
+      datasets: [{
+        label: "Lost",
+        lineTension: 0.2,
+        borderColor: '#d9534f',
+        borderWidth: 1.5,
+        showLine: true,
+        data: [3, 30, 16, 30, 16, 36, 21, 40, 20, 30],
+        backgroundColor: 'transparent'
+      }, {
+        label: "Lost",
+        lineTension: 0.2,
+        borderColor: '#5cb85c',
+        borderWidth: 1.5,
+        data: [6, 20, 5, 20, 5, 25, 9, 18, 20, 15],
+        backgroundColor: 'transparent'
+      }, {
+        label: "Lost",
+        lineTension: 0.2,
+        borderColor: '#f0ad4e',
+        borderWidth: 1.5,
+        data: [12, 20, 15, 20, 5, 35, 10, 15, 35, 25],
+        backgroundColor: 'transparent'
+      }, {
+        label: "Lost",
+        lineTension: 0.2,
+        borderColor: '#337ab7',
+        borderWidth: 1.5,
+        data: [16, 25, 10, 25, 10, 30, 14, 23, 14, 29],
+        backgroundColor: 'transparent'
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          gridLines: {
+            drawBorder: false
+          },
+          ticks: {
+            stepSize: 12
+          }
+        }],
+        xAxes: [{
+          gridLines: {
+            display: false,
+          },
+        }],
+      }
+    }
+  })
 </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 </body>
-    </html>
+</html>
+
